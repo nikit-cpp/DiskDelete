@@ -49,9 +49,13 @@ function start()
   filename = string.sub(filename,8)
   vlc.msg.dbg("[Diskdelete] selected for deletion: " .. filename)
   id = vlc.playlist.current()
-  vlc.playlist.delete( id )
-  os.remove(filename)
+  
   vlc.playlist.next()
+  id2 = vlc.playlist.current()
+  os.remove(filename)
+  vlc.playlist.delete(id)
+  id3 = id2 + 1
+  vlc.playlist.gotoitem(id3)
   vlc.deactivate()
 end
 
