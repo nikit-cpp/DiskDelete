@@ -15,7 +15,7 @@ Restart the VLC.
 function descriptor()
   return { title = "Diskdelete" ;
     version = "alpha" ;
-    author = "Mark MorschhГ¤user" ;
+    author = "Mark Morschhäuser" ;
     shortdesc = "DELETE current playing FILE FROM DISK";
     description = "<h1>Diskdelete</h1>"
 		  .. "When you're playing a file, use Diskdelete to "
@@ -43,19 +43,16 @@ end
 --[[ Start ]]
 
 function start()
-  d = vlc.dialog("Diskdelete")
-  d:add_label("<b>Clicking</b> this button will <b>delete</b> the currently playing file <b>from disk</b>.<br>You have to <b>be sure</b> as <b>you won't be asked</b> again!<br>You are responsible for your own actions, consider yourself warned.")
-  d:add_button("DELETE CURRENT FILE PERMANENTLY FROM DISK WITHOUT ASKING", delete)
-  d:show()
-end
-
-function delete()
   item = vlc.input.item()
   uri = item:uri()
   filename = vlc.strings.decode_uri(uri)
   filename = string.sub(filename,8)
   vlc.msg.dbg("[Diskdelete] selected for deletion: " .. filename)
+  id = vlc.playlist.current()
+  vlc.playlist.delete( id )
   os.remove(filename)
+  vlc.playlist.next()
+  vlc.deactivate()
 end
 
 function meta_changed()
