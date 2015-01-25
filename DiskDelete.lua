@@ -51,9 +51,9 @@ function start()
   idCur = vlc.playlist.current()
   
   vlc.playlist.delete(idCur)
-  os.remove(filename)
   idNext = idCur + 1
   vlc.playlist.gotoitem(idNext)
+  os.remove(filename)
   vlc.deactivate()
 end
 
